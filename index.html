@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V Bus Ticket Share</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
+h2{
+    text-align:center;
+}
+input,button{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    box-sizing:border-box;
+}
+button{
+    background:#25D366;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+img{
+    width:100%;
+    max-height:250px;
+    object-fit:contain;
+    border:1px solid #ddd;
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<h2>🚌 V Bus Ticket Share</h2>
+
+<input type="text" id="name" placeholder="Customer Name" required>
+
+<input type="text" id="mobile" placeholder="WhatsApp Number (91xxxxxxxxxx)" required>
+
+<input type="file" id="photo" accept="image/*">
+
+<img id="preview">
+
+<button onclick="sendWhatsApp()">Send WhatsApp</button>
+
+<script>
+// Image Preview
+document.getElementById("photo").addEventListener("change", function(e){
+    const file = e.target.files[0];
+
+    if(file){
+        const reader = new FileReader();
+
+        reader.onload = function(event){
+            document.getElementById("preview").src = event.target.result;
+            document.getElementById("preview").style.display = "block";
+        }
+
+        reader.readAsDataURL(file);
+    }
+});
+
+function sendWhatsApp(){
+
+    let name = document.getElementById("name").value;
+    let mobile = document.getElementById("mobile").value;
+
+    let message =
+`Hi ${name} 👋
+
+Thank you for booking with 🚌 V Bus.
+
+Your ticket has been confirmed.
+
+📷 Ticket Image Attached
+
+For live tracking details, please DM us on WhatsApp before your journey and our team will send the tracking link.
+
+📜 Terms & Conditions:
+• Please arrive at the boarding point 15 minutes before departure.
+• Valid ID proof may be required during travel.
+• Departure and arrival times may vary due to traffic, weather, or road conditions.
+• V Bus is not responsible for delays caused by unforeseen circumstances.
+• Cancellation and refund policies are subject to the operator's rules.
+
+📧 Support: [vbustravels@gmail.com](mailto:vbustravels@gmail.com)
+
+Have a safe and comfortable journey! 😊
+
+— V Bus`
+;
+
+    window.open(
+        "https://wa.me/" + mobile +
+        "?text=" + encodeURIComponent(message),
+        "_blank"
+    );
+}
+</script>
+
+</body>
+</html>
