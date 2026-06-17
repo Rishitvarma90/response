@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,34 +8,47 @@
 
 <style>
 body{
-    font-family:Arial,sans-serif;
-    max-width:500px;
-    margin:auto;
-    padding:20px;
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
 }
+
 h2{
     text-align:center;
+    color:#ff6600;
 }
+
 input,button{
     width:100%;
     padding:12px;
     margin:10px 0;
     box-sizing:border-box;
 }
+
 button{
     background:#25D366;
     color:white;
     border:none;
+    border-radius:5px;
     cursor:pointer;
 }
+
+button:hover{
+    opacity:0.9;
+}
+
 img{
     width:100%;
     max-height:250px;
     object-fit:contain;
     border:1px solid #ddd;
+    border-radius:5px;
     display:none;
+    margin-top:10px;
 }
 </style>
+
 </head>
 <body>
 
@@ -51,17 +65,22 @@ img{
 <button onclick="sendWhatsApp()">Send WhatsApp</button>
 
 <script>
-// Image Preview
+
+// Preview Selected Image
 document.getElementById("photo").addEventListener("change", function(e){
+
     const file = e.target.files[0];
 
     if(file){
+
         const reader = new FileReader();
 
         reader.onload = function(event){
+
             document.getElementById("preview").src = event.target.result;
             document.getElementById("preview").style.display = "block";
-        }
+
+        };
 
         reader.readAsDataURL(file);
     }
@@ -69,8 +88,13 @@ document.getElementById("photo").addEventListener("change", function(e){
 
 function sendWhatsApp(){
 
-    let name = document.getElementById("name").value;
-    let mobile = document.getElementById("mobile").value;
+    let name = document.getElementById("name").value.trim();
+    let mobile = document.getElementById("mobile").value.trim();
+
+    if(name === "" || mobile === ""){
+        alert("Please enter Customer Name and WhatsApp Number");
+        return;
+    }
 
     let message =
 `Hi ${name} 👋
@@ -84,26 +108,32 @@ Your ticket has been confirmed.
 For live tracking details, please DM us on WhatsApp before your journey and our team will send the tracking link.
 
 📜 Terms & Conditions:
-• Please arrive at the boarding point 15 minutes before departure.
-• Valid ID proof may be required during travel.
-• Departure and arrival times may vary due to traffic, weather, or road conditions.
-• V Bus is not responsible for delays caused by unforeseen circumstances.
-• Cancellation and refund policies are subject to the operator's rules.
 
-📧 Support: [vbustravels@gmail.com](mailto:vbustravels@gmail.com)
+• Please arrive at the boarding point 15 minutes before departure.
+• Passengers must carry a valid ID proof.
+• Departure and arrival times may vary due to traffic or road conditions.
+• Cancellation and refund policies are subject to the bus operator's rules.
+• V Bus is not responsible for delays caused by unforeseen circumstances.
+
+📧 Support: vbustravels@gmail.com
 
 Have a safe and comfortable journey! 😊
 
-— V Bus`
-;
+— V Bus`;
 
     window.open(
         "https://wa.me/" + mobile +
         "?text=" + encodeURIComponent(message),
         "_blank"
     );
+
+    alert(
+        "WhatsApp opened.\n\nPlease attach the selected ticket image manually before sending."
+    );
 }
+
 </script>
 
 </body>
 </html>
+```
